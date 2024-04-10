@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:leadeetuto/screens/guest/auth.dart';
+import 'package:leadeetuto/screens/guest/guest.dart';
 import 'package:leadeetuto/screens/guest/password.dart';
 import 'package:leadeetuto/screens/guest/term.dart';
 
@@ -13,7 +14,7 @@ class App extends StatelessWidget {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Leadee',
-      home: PasswordScreen(),
+      home: GuestScreen(),
     );
   }
 }

@@ -1,16 +1,33 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:leadeetuto/main.dart';
 import 'package:lorem_ipsum/lorem_ipsum.dart';
 
 class TermScreen extends StatefulWidget {
-  const TermScreen({super.key});
+  final Function(int) onChangedStep;
+
+  const TermScreen({super.key, required this.onChangedStep});
 
   @override
   State<TermScreen> createState() => _TermScreenState();
 }
 
 class _TermScreenState extends State<TermScreen> {
+  late ScrollController _scrollController;
+  bool _termsReaded = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController = ScrollController();
+
+    _scrollController.addListener(() {
+      if (_scrollController.offset >=
+              _scrollController.position.maxScrollExtent &&
+          !_scrollController.position.outOfRange) {
+        setState(() => _termsReaded = true);
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -20,9 +37,7 @@ class _TermScreenState extends State<TermScreen> {
           title: const Text('Terms & Conditions'),
           leading: IconButton(
             icon: const Icon(Icons.arrow_back),
-            onPressed: () {
-              print('back');
-            },
+            onPressed: () => widget.onChangedStep(0),
           ),
         ),
         body: Padding(
@@ -36,6 +51,7 @@ class _TermScreenState extends State<TermScreen> {
             children: [
               Expanded(
                 child: SingleChildScrollView(
+                  controller: _scrollController,
                   physics: const AlwaysScrollableScrollPhysics(),
                   child: Column(
                     //crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -56,7 +72,7 @@ class _TermScreenState extends State<TermScreen> {
                   foregroundColor: Colors.white,
                   shape: const ContinuousRectangleBorder(),
                 ),
-                onPressed: () => print('accept'),
+                onPressed: !_termsReaded ? null : () => widget.onChangedStep(2),
                 child: Text(
                   'accept'.toUpperCase(),
                   style: const TextStyle(

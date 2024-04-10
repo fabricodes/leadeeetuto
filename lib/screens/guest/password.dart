@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
 
 class PasswordScreen extends StatefulWidget {
-  const PasswordScreen({super.key});
+  final Function(int) onChangedStep;
+
+  const PasswordScreen({super.key, required this.onChangedStep});
 
   @override
   State<PasswordScreen> createState() => _PasswordScreenState();
 }
 
 class _PasswordScreenState extends State<PasswordScreen> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   bool _isSecret = true;
+  String _password = '';
 
   @override
   Widget build(BuildContext context) {
@@ -18,9 +23,7 @@ class _PasswordScreenState extends State<PasswordScreen> {
           titleSpacing: 0.0,
           leading: IconButton(
             icon: const Icon(Icons.arrow_back),
-            onPressed: () {
-              print('back');
-            },
+            onPressed: () => widget.onChangedStep(0),
           ),
         ),
         body: Center(
@@ -38,6 +41,7 @@ class _PasswordScreenState extends State<PasswordScreen> {
                   height: 50.0,
                 ),
                 Form(
+                  key: _formKey,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
@@ -46,6 +50,10 @@ class _PasswordScreenState extends State<PasswordScreen> {
                         height: 10.0,
                       ),
                       TextFormField(
+                        onChanged: (value) => setState(() => _password = value),
+                        validator: (value) => value!.length < 6
+                            ? 'Enter a password. 6 caracters min required.'
+                            : null,
                         obscureText: _isSecret,
                         decoration: InputDecoration(
                           suffixIcon: InkWell(
@@ -81,7 +89,11 @@ class _PasswordScreenState extends State<PasswordScreen> {
                           foregroundColor: Colors.white,
                           shape: const ContinuousRectangleBorder(),
                         ),
-                        onPressed: () => (),
+                        onPressed: () {
+                          if (_formKey.currentState!.validate()) {
+                            print(_password);
+                          }
+                        },
                         child: Text(
                           'continue'.toUpperCase(),
                           style: const TextStyle(
