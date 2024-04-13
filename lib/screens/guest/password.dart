@@ -90,9 +90,7 @@ class _PasswordScreenState extends State<PasswordScreen> {
                           shape: const ContinuousRectangleBorder(),
                         ),
                         onPressed: () {
-                          if (_formKey.currentState!.validate()) {
-                            print(_password);
-                          }
+                          if (_formKey.currentState!.validate()) {}
                         },
                         child: Text(
                           'continue'.toUpperCase(),

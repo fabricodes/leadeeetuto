@@ -1,10 +1,12 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:leadeetuto/screens/guest/auth.dart';
 import 'package:leadeetuto/screens/guest/guest.dart';
-import 'package:leadeetuto/screens/guest/password.dart';
-import 'package:leadeetuto/screens/guest/term.dart';
 
-void main() => runApp(const App());
+void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  Firebase.initializeApp();
+  runApp(const App());
+}
 
 class App extends StatelessWidget {
   const App({super.key});

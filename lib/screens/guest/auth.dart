@@ -10,7 +10,7 @@ class AuthScreen extends StatefulWidget {
 }
 
 class _AuthScreenState extends State<AuthScreen> {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>();
   final RegExp emailRegex = RegExp(r"[a-z0-9\._-]+@[a-z0-9\._-]+\.[a-z]+");
 
   String _email = '';
@@ -25,7 +25,7 @@ class _AuthScreenState extends State<AuthScreen> {
               horizontal: 30,
             ),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              //crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 RichText(
                   text: TextSpan(
@@ -55,9 +55,7 @@ class _AuthScreenState extends State<AuthScreen> {
                     ],
                   ),
                 ),
-                const SizedBox(
-                  height: 10.0,
-                ),
+                const SizedBox(height: 10.0),
                 const Text(
                   "It all starts here",
                   style: TextStyle(
@@ -68,62 +66,62 @@ class _AuthScreenState extends State<AuthScreen> {
                   height: 50.0,
                 ),
                 Form(
-                    key: _formKey,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        const Text("Enter your email"),
-                        const SizedBox(
-                          height: 10.0,
-                        ),
-                        TextFormField(
-                          onChanged: (value) => setState(() => _email = value),
-                          validator: (value) => !emailRegex.hasMatch(value!)
-                              ? 'Please enter a valid email'
-                              : null,
-                          decoration: InputDecoration(
-                            hintText: 'ex: john.doe@domain.tld',
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(0.0),
-                              borderSide: const BorderSide(
-                                color: Colors.grey,
-                              ),
+                  key: _formKey,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      const Text("Enter your email"),
+                      const SizedBox(
+                        height: 10.0,
+                      ),
+                      TextFormField(
+                        onChanged: (value) => setState(() => _email = value),
+                        validator: (value) => !emailRegex.hasMatch(value!)
+                            ? 'Please enter a valid email'
+                            : null,
+                        decoration: InputDecoration(
+                          hintText: 'ex: john.doe@domain.tld',
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(0.0),
+                            borderSide: const BorderSide(
+                              color: Colors.grey,
                             ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(0.0),
-                              borderSide: const BorderSide(
-                                color: Colors.grey,
-                              ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(0.0),
+                            borderSide: const BorderSide(
+                              color: Colors.grey,
                             ),
                           ),
                         ),
-                        const SizedBox(
-                          height: 10.0,
-                        ),
-                        ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            padding: const EdgeInsets.symmetric(
-                              vertical: 15.0,
-                            ),
-                            backgroundColor: Theme.of(context).primaryColor,
-                            foregroundColor: Colors.white,
-                            shape: const ContinuousRectangleBorder(),
+                      ),
+                      const SizedBox(
+                        height: 10.0,
+                      ),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 15.0,
                           ),
-                          onPressed: () {
-                            if (_formKey.currentState!.validate()) {
-                              print(_email);
-                              widget.onChangedStep(1);
-                            }
-                          },
-                          child: Text(
-                            'continue'.toUpperCase(),
-                            style: const TextStyle(
-                              fontSize: 15,
-                            ),
+                          backgroundColor: Theme.of(context).primaryColor,
+                          foregroundColor: Colors.white,
+                          shape: const ContinuousRectangleBorder(),
+                        ),
+                        onPressed: () {
+                          if (_formKey.currentState!.validate()) {
+                            widget.onChangedStep(1);
+                          }
+                        },
+                        child: Text(
+                          'continue'.toUpperCase(),
+                          style: const TextStyle(
+                            fontSize: 15,
                           ),
                         ),
-                      ],
-                    ))
+                      ),
+                    ],
+                  ),
+                ),
               ],
             ),
           ),

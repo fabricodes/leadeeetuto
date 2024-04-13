@@ -33,7 +33,7 @@ class _TermScreenState extends State<TermScreen> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          titleSpacing: 0.0,
+          titleSpacing: 100.0,
           title: const Text('Terms & Conditions'),
           leading: IconButton(
             icon: const Icon(Icons.arrow_back),
@@ -54,10 +54,10 @@ class _TermScreenState extends State<TermScreen> {
                   controller: _scrollController,
                   physics: const AlwaysScrollableScrollPhysics(),
                   child: Column(
-                    //crossAxisAlignment: CrossAxisAlignment.stretch,
-                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Text(loremIpsum(words: 420)),
+                      Text(
+                        loremIpsum(words: 420, paragraphs: 3),
+                      ),
                     ],
                   ),
                 ),
