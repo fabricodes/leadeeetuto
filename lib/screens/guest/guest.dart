@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:leadeetuto/screens/guest/auth.dart';
 import 'package:leadeetuto/screens/guest/password.dart';
 import 'package:leadeetuto/screens/guest/term.dart';
+import 'package:leadeetuto/screens/services/userService.dart';
 
 class GuestScreen extends StatefulWidget {
   const GuestScreen({super.key});
@@ -11,6 +12,7 @@ class GuestScreen extends StatefulWidget {
 }
 
 class _GuestScreenState extends State<GuestScreen> {
+  final _userService = UserService();
   final List<Widget> _widgets = [];
   int _indexSelected = 0;
 
@@ -29,6 +31,7 @@ class _GuestScreenState extends State<GuestScreen> {
         onChangedStep: (index) => setState(() => _indexSelected = index),
       ),
     ]);
+    _userService.auth();
   }
 
   @override
