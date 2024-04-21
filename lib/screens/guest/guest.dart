@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:leadeetuto/models/usermodel.dart';
+import 'package:leadeetuto/screens/dashboard/home.dart';
 import 'package:leadeetuto/screens/guest/auth.dart';
 import 'package:leadeetuto/screens/guest/password.dart';
 import 'package:leadeetuto/screens/guest/term.dart';
@@ -15,6 +17,8 @@ class _GuestScreenState extends State<GuestScreen> {
   final _userService = UserService();
   final List<Widget> _widgets = [];
   int _indexSelected = 0;
+  String _email = '';
+  String? _password;
 
   @override
   void initState() {
@@ -22,16 +26,38 @@ class _GuestScreenState extends State<GuestScreen> {
 
     _widgets.addAll([
       AuthScreen(
-        onChangedStep: (index) => setState(() => _indexSelected = index),
+        onChangedStep: (index, value) => setState(() {
+          _indexSelected = index;
+          _email = value;
+        }),
       ),
       TermScreen(
         onChangedStep: (index) => setState(() => _indexSelected = index),
       ),
       PasswordScreen(
-        onChangedStep: (index) => setState(() => _indexSelected = index),
+        onChangedStep: (int? index, String? value) => setState(() {
+          if (index != null) {
+            _indexSelected = index;
+          }
+          if (value != null) {
+            _userService
+                .auth(UserModel(
+              email: _email,
+              password: value,
+            ))
+                .then((value) {
+              if (value.uid != null) {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const HomeScreen(),
+                    ));
+              }
+            });
+          }
+        }),
       ),
     ]);
-    _userService.auth();
   }
 
   @override
